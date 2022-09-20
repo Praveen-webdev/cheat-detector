@@ -1,0 +1,32 @@
+.login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+
+}
+
+.loginTitle{
+    display: flex;
+    justify-content: center;
+    letter-spacing: 8.5px;
+    font-size: 24px;
+    cursor: pointer;
+}
+.login>input{
+   padding: 10px; 
+}
+
+.login>input:focus{
+    outline-width: 0;
+}
+
+.login>p{
+    margin-top: 10px;
+    background-color: rgb(241, 81, 81);
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}

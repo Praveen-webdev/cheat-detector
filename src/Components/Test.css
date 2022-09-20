@@ -1,0 +1,150 @@
+.test {
+  /* background-color: rgba(229, 178, 178, 0.685); */
+  width: 450px;
+  min-height: 200px;
+  height: min-content;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 10px 10px 42px 0px rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: -50px;
+}
+
+@media (max-width: 768px) {
+  .test {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .question-section {
+    font-size: 12px;
+  }
+
+  .question-count {
+    font-size: 12px;
+  }
+
+  .testhead {
+    font-size: 22px !important;
+  }
+
+  button {
+    font-size: 13px !important;
+    width: auto;
+  }
+}
+
+.body {
+  /* background-color: rgba(197, 150, 150, 0.525); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.camfac {
+  background-color: rgba(229, 178, 178, 0.685);
+  width: 100%;
+  padding-top: 20px;
+}
+
+.video-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+  margin-right: 20px;
+  position: relative;
+}
+
+.canvas{
+  top: 0;
+  right: 0;
+  position: absolute;
+ 
+  
+}
+
+.video-feed {
+  border: 1px solid black;
+}
+@media (max-width: 768px) {
+  .test {
+    margin-top: -250px;
+  }
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.score-section {
+  display: flex;
+  font-size: 24px;
+  align-items: center;
+}
+
+/* QUESTION/TIMER/LEFT SECTION */
+.question-section {
+  width: 100%;
+  position: relative;
+}
+
+.question-count {
+  margin-bottom: 20px;
+}
+
+.question-count span {
+  font-size: 28px;
+}
+
+.question-text {
+  margin-bottom: 12px;
+}
+
+.timer-text {
+  background: rgb(230, 153, 12);
+  padding: 15px;
+  margin-top: 20px;
+  margin-right: 20px;
+  border: 5px solid rgb(255, 189, 67);
+  border-radius: 15px;
+  text-align: center;
+}
+
+/* ANSWERS/RIGHT SECTION */
+.answer-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+button {
+  width: 100%;
+  font-size: 16px;
+  color: black;
+  background-color: #dde2f4;
+  border-radius: 15px;
+  display: flex;
+  padding: 5px 15px;
+  text-align: center;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid;
+}
+
+button:hover {
+  background-color: rgba(247, 204, 204, 0.525);
+}
+
+button:focus {
+  outline: none;
+}
+
+button svg {
+  margin-right: 5px;
+}
+
+
