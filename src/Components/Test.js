@@ -21,6 +21,12 @@ export default function Test({ rollNo }) {
     //Detecting switching tabs
     alert("Switching tabs is not allowed ! ");
     warningCount++;
+    if (warningCount > 3) {
+      alert(
+        "Due to the exploitation of warnings ,You are not allowed to continue the test!"
+      );
+      history.push("/");
+    }
   }
 
   useEffect(() => {
@@ -106,11 +112,11 @@ export default function Test({ rollNo }) {
         count = 0;
         warningCount++;
       }
-      if (warningCount > 5) {
+      if (warningCount > 3) {
         alert(
           "Due to the exploitation of warnings ,You are not allowed to continue the test!"
         );
-        history.push("/")
+        history.push("/");
       }
     }, 100);
   };
