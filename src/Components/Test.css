@@ -1,5 +1,5 @@
 .test {
-  /* background-color: rgba(229, 178, 178, 0.685); */
+  background-color: #ffffff; 
   width: 450px;
   min-height: 200px;
   height: min-content;
@@ -10,8 +10,14 @@
   justify-content: space-evenly;
   margin-top: -50px;
 }
-
+.roll{
+  display: block;
+  left: auto;
+}
 @media (max-width: 768px) {
+  /* .camfac{
+    display: none;
+  } */
   .test {
     margin-left: 20px;
     margin-right: 20px;
@@ -35,16 +41,16 @@
 }
 
 .body {
-  /* background-color: rgba(197, 150, 150, 0.525); */
+  color: #545c5b;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 85vh;
   overflow: hidden;
 }
 
 .camfac {
-  background-color: rgba(229, 178, 178, 0.685);
+  background-color: #efecf3;
   width: 100%;
   padding-top: 20px;
 }
@@ -57,12 +63,10 @@
   position: relative;
 }
 
-.canvas{
+.canvas {
   top: 0;
   right: 0;
   position: absolute;
- 
-  
 }
 
 .video-feed {
@@ -99,6 +103,7 @@ body::-webkit-scrollbar {
 }
 
 .question-text {
+  font-size: 15px;
   margin-bottom: 12px;
 }
 
@@ -123,8 +128,8 @@ body::-webkit-scrollbar {
 button {
   width: 100%;
   font-size: 16px;
-  color: black;
-  background-color: #dde2f4;
+  color: #eceef0;
+  background-color: #778987e7;
   border-radius: 15px;
   display: flex;
   padding: 5px 15px;
@@ -132,11 +137,13 @@ button {
   justify-content: flex-start;
   align-items: center;
   cursor: pointer;
-  border: 1px solid;
+  border: none;
 }
 
+
+
 button:hover {
-  background-color: rgba(247, 204, 204, 0.525);
+  background-color:#778987bc ;
 }
 
 button:focus {
@@ -146,5 +153,3 @@ button:focus {
 button svg {
   margin-right: 5px;
 }
-
-

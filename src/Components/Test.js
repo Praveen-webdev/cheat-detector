@@ -2,16 +2,26 @@ import React, { useState, useEffect, useRef } from "react";
 import "./Test.css";
 import { questions } from "./Questions";
 import * as faceapi from "face-api.js";
+import { useHistory } from "react-router-dom";
+import { usePageVisibility } from "react-page-visibility";
 
-export default function Test() {
-  const videoHeight=150;
-  const videoWidth=300;
+export default function Test({ rollNo }) {
+  const isVisible = usePageVisibility();
+  const history = useHistory();
+  const videoWidth = 300;
+  const videoHeight = 150;
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(0);
-
   const canvasRef = useRef();
   const videoRef = useRef();
+  let warningCount = 0;
+
+  if (!isVisible) {
+    //Detecting switching tabs
+    alert("Switching tabs is not allowed ! ");
+    warningCount++;
+  }
 
   useEffect(() => {
     const loadmodels = async () => {
@@ -24,9 +34,12 @@ export default function Test() {
     };
     loadmodels();
   }, []);
+
   const startVideo = () => {
-    console.log("oombu");
-    var constraints = { audio: false, video: { width: videoWidth, height: videoHeight } };
+    var constraints = {
+      audio: false,
+      video: { width: videoWidth, height: videoHeight },
+    };
     navigator.mediaDevices
       .getUserMedia(constraints)
       .then(function (mediaStream) {
@@ -55,6 +68,7 @@ export default function Test() {
   };
 
   const handleVideoOnPlay = () => {
+    let count = 0;
     setInterval(async () => {
       canvasRef.current.innerHTML = faceapi.createCanvasFromMedia(
         videoRef.current
@@ -63,18 +77,41 @@ export default function Test() {
         width: videoWidth,
         height: videoHeight,
       };
-      const detections = await faceapi
-        .detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions())
-        // .withFaceLandmarks()
-        // .withFaceExpressions()
-        detections.map((detection)=>{
-            detection._score=0;
-        })
-      const reSizedDetections=faceapi.resizeResults(detections,displaySize)
-      canvasRef.current.getContext('2d').clearRect(0,0,videoWidth,videoHeight)
-      faceapi.draw.drawDetections(canvasRef.current,detections)
-      
-      //  console.log(detections);
+      const detections = await faceapi.detectAllFaces(
+        videoRef.current,
+        new faceapi.TinyFaceDetectorOptions()
+      );
+      // .withFaceLandmarks()
+      // .withFaceExpressions()
+      detections.forEach((detection) => {
+        detection._score = 0;
+      });
+      const reSizedDetections = faceapi.resizeResults(detections, displaySize);
+      canvasRef.current
+        .getContext("2d")
+        .clearRect(0, 0, videoWidth, videoHeight);
+      faceapi.draw.drawDetections(canvasRef.current, reSizedDetections);
+      if (detections.length === 0) {
+        count++;
+      } else if (detections.length > 1) {
+        alert(
+          "You are not allowed to continue the exam since multiple faces detected !"
+        );
+        history.push("/");
+      }
+      if (count > 70) {
+        alert(
+          "Your face is not recognized or detection of illegal movements !"
+        );
+        count = 0;
+        warningCount++;
+      }
+      if (warningCount > 5) {
+        alert(
+          "Due to the exploitation of warnings ,You are not allowed to continue the test!"
+        );
+        history.push("/")
+      }
     }, 100);
   };
   return (
@@ -98,6 +135,7 @@ export default function Test() {
           ) : (
             <>
               <div className="question-section">
+                <span className="testhead">{rollNo}</span>
                 <div className="question-count">
                   <span className="testhead">
                     Question {currentQuestion + 1}
