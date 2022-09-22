@@ -4,6 +4,7 @@ import { questions } from "./Questions";
 import * as faceapi from "face-api.js";
 import { useHistory } from "react-router-dom";
 import { usePageVisibility } from "react-page-visibility";
+import { isMobile } from "react-device-detect";
 
 export default function Test({ rollNo }) {
   const isVisible = usePageVisibility();
@@ -15,18 +16,10 @@ export default function Test({ rollNo }) {
   const [score, setScore] = useState(0);
   const canvasRef = useRef();
   const videoRef = useRef();
-  let warningCount = 0;
 
   if (!isVisible) {
     //Detecting switching tabs
     alert("Switching tabs is not allowed ! ");
-    warningCount++;
-    if (warningCount > 3) {
-      alert(
-        "Due to the exploitation of warnings ,You are not allowed to continue the test!"
-      );
-      history.push("/");
-    }
   }
 
   useEffect(() => {
@@ -56,7 +49,9 @@ export default function Test({ rollNo }) {
         };
       })
       .catch(function (err) {
-        console.log(err.name + ": " + err.message);
+        alert(
+          "App requires access to your camera and microphone.Click the camera blocked icon in your browser's address bar."
+        );
       });
   };
 
@@ -75,6 +70,7 @@ export default function Test({ rollNo }) {
 
   const handleVideoOnPlay = () => {
     let count = 0;
+    let countWarnings = 0;
     setInterval(async () => {
       canvasRef.current.innerHTML = faceapi.createCanvasFromMedia(
         videoRef.current
@@ -92,11 +88,17 @@ export default function Test({ rollNo }) {
       detections.forEach((detection) => {
         detection._score = 0;
       });
-      const reSizedDetections = faceapi.resizeResults(detections, displaySize);
-      canvasRef.current
-        .getContext("2d")
-        .clearRect(0, 0, videoWidth, videoHeight);
-      faceapi.draw.drawDetections(canvasRef.current, reSizedDetections);
+      if (!isMobile) {
+        //drawing detections overlay
+        const reSizedDetections = faceapi.resizeResults(
+          detections,
+          displaySize
+        );
+        canvasRef.current
+          .getContext("2d")
+          .clearRect(0, 0, videoWidth, videoHeight);
+        faceapi.draw.drawDetections(canvasRef.current, reSizedDetections);
+      }
       if (detections.length === 0) {
         count++;
       } else if (detections.length > 1) {
@@ -106,13 +108,13 @@ export default function Test({ rollNo }) {
         history.push("/");
       }
       if (count > 70) {
+        count = 0;
+        countWarnings++;
         alert(
           "Your face is not recognized or detection of illegal movements !"
         );
-        count = 0;
-        warningCount++;
       }
-      if (warningCount > 3) {
+      if (countWarnings > 3) {
         alert(
           "Due to the exploitation of warnings ,You are not allowed to continue the test!"
         );

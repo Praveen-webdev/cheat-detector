@@ -1,35 +1,28 @@
 import React,{useState} from "react";
 import "./Login.css";
 import { useHistory } from "react-router-dom";
-import { isMobile } from "react-device-detect";
+
 function Login({handleClick}) {
-  const [rollNo,setRollNo]=useState("");
+  const [name,setName]=useState("");
   const history = useHistory();
 
   const onStartTest=(e)=>{
     e.preventDefault();
-    if(rollNo.startsWith("ES") ||rollNo.startsWith("es")){
-      handleClick(rollNo.toLocaleUpperCase())
+    if(!name==""){
+      handleClick(name.toUpperCase())
       history.push("/test");
     }else{
-      alert("Invalid Roll number ! Hint : Roll number starts with ES...")
+      alert("Please enter your name...")
     }
   }
   return (
     <div>
       <h4 className="loginTitle">HACKATHON</h4>
       <div className="login">
-        <input placeholder="Roll number" onChange={(e)=>setRollNo(e.target.value)}></input>
-        {isMobile ? (
-          <button type="button" disabled onClick={onStartTest}>
+        <input placeholder="Name..." onChange={(e)=>setName(e.target.value)}></input>
+        <button type="button" onClick={onStartTest}>
             Start Test
           </button>
-        ) : (
-          <button type="button" onClick={onStartTest}>
-            Start Test
-          </button>
-        )}
-        <h5 className="rules ">(USE DESKTOP DEVICES)</h5>
       </div>
     </div>
   );
